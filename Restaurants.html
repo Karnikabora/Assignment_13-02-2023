@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .sitdown {
+        color: green;
+      }
+      .bar {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="restaurantList"></ul>
+
+    <script>
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          var xmlDoc = this.responseXML;
+          var restaurants = xmlDoc.getElementsByTagName("restaurant");
+          for (var i = 0; i < restaurants.length; i++) {
+            var name = restaurants[i].getAttribute("name");
+            var address = restaurants[i].getAttribute("address");
+            var type = restaurants[i].getAttribute("type");
+            var listItem = document.createElement("li");
+            listItem.className = type;
+            listItem.innerHTML = name + " - " + address;
+            document.getElementById("restaurantList").appendChild(listItem);
+          }
+        }
+      };
+      xhttp.open("GET", "restaurants.xml", true);
+      xhttp.send();
+    </script>
+  </body>
+</html>
